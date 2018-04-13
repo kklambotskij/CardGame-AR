@@ -9,7 +9,7 @@
 *.suo
 *.user
 *.sln.docstates
-$GIT_DIR/Library
+$CardGame-AR/Library
 # Build results
 [Dd]ebug/
 [Rr]elease/
