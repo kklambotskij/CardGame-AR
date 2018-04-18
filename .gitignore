@@ -7,6 +7,9 @@ Temp/*
 *.csproj
 *.sln
 *.ide
+*.dll
+*.mdb
+
 #WinMerge Backups
 *.bak
 
