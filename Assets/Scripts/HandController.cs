@@ -52,21 +52,24 @@ public class HandController : MonoBehaviour
             case Results.Skip:
                 break;
             case Results.ChangeDir:
+                EndTurn();
                 break;
             case Results.TakeCards:
-                int count = 0;
                 switch (localDesk.discardPile.Cards[0].value)
                 {
                     case "2Cards":
-                        count = 2;
+                        for (int i = 0; i < 2; i++)
+                        {
+                            localDesk.GiveCard(turnController.NextPlayer(), 0, true);
+                        }
                         break;
                     case "4Cards":
-                        count = 4;
+                        for (int i = 0; i < 4; i++)
+                        {
+                            localDesk.GiveCard(turnController.NextPlayer(), 0, true);
+                        }
+                        EndTurn();
                         break;
-                }
-                for (int i = 0; i < count; i++)
-                {
-                    localDesk.GiveCard(turnController.NextPlayer(), 0, true);
                 }
                 break;
             case Results.DrawCard:
