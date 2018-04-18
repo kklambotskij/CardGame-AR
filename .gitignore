@@ -1,7 +1,7 @@
 #################
 ## Unity3D Data
 #################
-Library/
+Library/*
 */Temp/*
 Temp/*
 *.csproj
@@ -102,6 +102,14 @@ Desktop.ini
 *.pfx
 
 *.mdb
+<<<<<<< HEAD
+Library/CurrentMaximizeLayout.dwlt
+Library/assetDatabase3
+Assets/sceneee.unity
+Library/ScriptAssemblies/Assembly-CSharp.dll.mdb
+Library/ScriptAssemblies/Assembly-CSharp.dll
+Library/CurrentMaximizeLayout.dwlt
+=======
 *.mdb
 *.dll
 *.mdb
@@ -109,3 +117,4 @@ Desktop.ini
 Library/assetDatabase3
 *.dwlt
 *.mdb
+>>>>>>> e0a2383f8706076bbf94c552feefbba99707e1ed
