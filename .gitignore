@@ -98,3 +98,11 @@ Desktop.ini
 # Certificate file extensions
 *.pfx
 
+*.mdb
+*.mdb
+*.dll
+*.mdb
+*.lock
+Library/assetDatabase3
+*.dwlt
+*.mdb
