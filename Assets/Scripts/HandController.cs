@@ -41,6 +41,7 @@ public class HandController : MonoBehaviour
     void ResultController(string owner, Type type)
     {
         Results result = ChooseController(owner, type);
+        if (result == Results.Nothing) { return; }
         switch (result)
         {
             case Results.Nothing:
@@ -55,6 +56,7 @@ public class HandController : MonoBehaviour
             case Results.TakeCards:
                 break;
             case Results.DrawCard:
+                EndTurn();
                 break;
             case Results.Victory:
                 break;
@@ -142,15 +144,15 @@ public class HandController : MonoBehaviour
         return result;
     }
 
-    int DrawCard(string name)
+    Results DrawCard(string name)
     {
         if(localDesk.localDeck.Cards.Count > 0)
         {
             //Debug.Log(playerName + isMyTurn.ToString());
             localDesk.GiveCard(this, 0, true);
-            return 1;
+            return Results.DrawCard;
         }
-        return 0;
+        return Results.Nothing;
     }
 
     Results PlayCard(int index)

@@ -1,4 +1,11 @@
 #################
+## Unity3D Data
+#################
+Library/
+
+#WinMerge Backups
+*.bak
+#################
 ## Visual Studio
 #################
 
@@ -9,7 +16,6 @@
 *.suo
 *.user
 *.sln.docstates
-$CardGame-AR/Library
 # Build results
 [Dd]ebug/
 [Rr]elease/
