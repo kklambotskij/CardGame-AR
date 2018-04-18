@@ -54,6 +54,14 @@ public class HandController : MonoBehaviour
             case Results.ChangeDir:
                 break;
             case Results.TakeCards:
+                switch (localDesk.discardPile.Cards[0].value)
+                {
+                    case "2Cards":
+                        
+                        break;
+                    case "4Cards":
+                        break;
+                }
                 break;
             case Results.DrawCard:
                 EndTurn();
@@ -66,7 +74,6 @@ public class HandController : MonoBehaviour
     }
     void Update()
     {
-        //Test
         if (isNewCards)
         {
             RenderCard();
@@ -116,7 +123,6 @@ public class HandController : MonoBehaviour
                         case Type.Pattern:
                             break;
                     }
-                   
                 }
             }
         }
