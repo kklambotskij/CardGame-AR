@@ -54,7 +54,7 @@ public class HandController : MonoBehaviour
             case Results.ChangeDir:
                 break;
             case Results.TakeCards:
-<<<<<<< HEAD
+
                 int count = 0;
                 switch (localDesk.discardPile.Cards[0].value)
                 {
@@ -69,8 +69,7 @@ public class HandController : MonoBehaviour
                 {
                     localDesk.GiveCard(turnController.NextPlayer(), 0, true);
                 }
-=======
->>>>>>> fa5fa0c1c28d78f5ea52fc2f9ec18044bca39169
+
                 break;
             case Results.DrawCard:
                 EndTurn();
