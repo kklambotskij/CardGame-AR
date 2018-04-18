@@ -75,6 +75,8 @@ public class HandController : MonoBehaviour
                 EndTurn();
                 break;
             case Results.Victory:
+                turnController.win = true;
+                EndTurn();
                 break;
             default:
                 break;
