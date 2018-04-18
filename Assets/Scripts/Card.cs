@@ -127,6 +127,7 @@ public class Card {
     public Card(Card card)
     {
         type = card.type;
+		color = card.color;
         value = card.value;
         isOnScreen = false;
         owner = card.owner;
