@@ -2,9 +2,14 @@
 ## Unity3D Data
 #################
 Library/
-
+*/Temp/*
+Temp/*
+*.csproj
+*.sln
+*.ide
 #WinMerge Backups
 *.bak
+
 #################
 ## Visual Studio
 #################
