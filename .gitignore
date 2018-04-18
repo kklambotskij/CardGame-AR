@@ -101,3 +101,10 @@ Desktop.ini
 # Certificate file extensions
 *.pfx
 
+*.mdb
+Library/CurrentMaximizeLayout.dwlt
+Library/assetDatabase3
+Assets/sceneee.unity
+Library/ScriptAssemblies/Assembly-CSharp.dll.mdb
+Library/ScriptAssemblies/Assembly-CSharp.dll
+Library/CurrentMaximizeLayout.dwlt
