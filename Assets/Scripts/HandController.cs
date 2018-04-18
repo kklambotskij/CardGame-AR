@@ -66,6 +66,7 @@ public class HandController : MonoBehaviour
     }
     void Update()
     {
+        //Test
         if (isNewCards)
         {
             RenderCard();
