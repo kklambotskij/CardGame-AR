@@ -52,6 +52,7 @@ public class HandController : MonoBehaviour
             case Results.Skip:
                 break;
             case Results.ChangeDir:
+				EndTurn();
                 break;
             case Results.TakeCards:
 
