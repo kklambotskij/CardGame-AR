@@ -10,8 +10,13 @@ public class Access : MonoBehaviour
 	int playerNumber = -1;
     Text currentPlayerText;
     int timerTurn;
-    bool win;
+    public bool win;
     public int amountOfPlayers;
+
+    HandController NextPlayer()
+    {
+
+    }
 
 	// Use this for initialization
 	void Start () 
