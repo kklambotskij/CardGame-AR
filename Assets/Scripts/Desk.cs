@@ -76,7 +76,7 @@ public class Desk : MonoBehaviour
         }
         //DeckReset();
         GiveCard(discardPile, 0, true);
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 1; i++)
         {
             GiveCard(hand1, 0, true);
             GiveCard(AIHand, 0, true);
