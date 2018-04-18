@@ -13,8 +13,13 @@ public class Access : MonoBehaviour
     public bool win;
     public int amountOfPlayers;
 
+<<<<<<< HEAD
 
    public HandController NextPlayer()
+=======
+   public HandController NextPlayer()
+
+>>>>>>> 6e8e0d8a35f43b7c399a5d54d155315d74a14471
     {
         playerNumber = (playerNumber + 1) % hands.Count;
         return hands[playerNumber];
