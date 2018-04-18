@@ -1,7 +1,7 @@
 #################
 ## Unity3D Data
 #################
-Library/
+Library/*
 */Temp/*
 Temp/*
 *.csproj
