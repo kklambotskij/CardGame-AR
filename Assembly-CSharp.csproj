@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\Desk.cs" />
      <Compile Include="Assets\Scripts\HandController.cs" />
      <Compile Include="Assets\Scripts\RenderMaster.cs" />
+     <Compile Include="Assets\Scripts\SetupLocalPlayer.cs" />
      <Compile Include="Assets\Vuforia\Scripts\BackgroundPlaneBehaviour.cs" />
      <Compile Include="Assets\Vuforia\Scripts\CloudRecoBehaviour.cs" />
      <Compile Include="Assets\Vuforia\Scripts\CylinderTargetBehaviour.cs" />

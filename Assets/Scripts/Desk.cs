@@ -18,7 +18,6 @@ public class Desk : MonoBehaviour
     HandController AIHand;
     public Deck localDeck;
     public Deck discardPile;
-    float time = 1;
     public int countCards;
     public int fishy = 21;
     TablePattern pokerPattern;

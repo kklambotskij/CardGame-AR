@@ -18,7 +18,6 @@ public class Access : MonoBehaviour
         return hands[playerNumber];
     }
 #warning AddPlayer to the scene
-
     void AddPlayer(string name)
     {
         players.Add(GameObject.Find("Hand"));
