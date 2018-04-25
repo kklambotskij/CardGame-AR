@@ -17,21 +17,14 @@ public class Access : MonoBehaviour
         playerNumber = (playerNumber + 1) % hands.Count;
         return hands[playerNumber];
     }
-	void Start () 
+	void StartGame () 
 	{
-        amountOfPlayers = 2;
+        amountOfPlayers = 1;
         win = false;
         timerTurn = -2;
         currentPlayerText = GameObject.Find("CurrentPlayerText").GetComponent<Text>();
-        for (int i = 0; i < amountOfPlayers; i++)
-        {
-            //players.Add(GameObject.Find("Player" + i));
-            //hands.Add(players[i].GetComponent<HandController>());
-        }
         players.Add(GameObject.Find("Hand"));
-		players.Add(GameObject.Find ("AI"));
 		hands.Add(players[0].GetComponent<HandController>()); //обращаемся к чужому скрипту чтобы менять там парметры
-		hands.Add(players[1].GetComponent<HandController>());
 		GiveTurn (0);
 	}
 	void GiveTurn(int hand)
