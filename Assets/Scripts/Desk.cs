@@ -23,7 +23,7 @@ public class Desk : MonoBehaviour
     TablePattern pokerPattern;
     // Use this for initialization
 
-    void StartGame()
+    public void StartGame()
     {
         localDeck = new Deck(Game.UNO, "DrawPile", this.gameObject);
         //localDeck = new Deck(Game.UNO, "UNO", this.gameObject);

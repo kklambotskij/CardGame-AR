@@ -6,30 +6,43 @@ using UnityEngine.UI;
 public class Access : MonoBehaviour
 {
     List<GameObject> players = new List<GameObject>();
-    List<HandController> hands = new List<HandController>();
+    public List<HandController> hands = new List<HandController>();
     int playerNumber = -1;
     Text currentPlayerText;
     int timerTurn;
     public bool win;
-    public int amountOfPlayers;
+    public int amountOfPlayers = 0;
+
+    public List<HandController> GetListOfHands()
+    {
+        return hands;
+    }
+
     public HandController NextPlayer()
     {
         playerNumber = (playerNumber + 1) % hands.Count;
         return hands[playerNumber];
     }
+
 #warning AddPlayer to the scene
+
     void AddPlayer(string name)
     {
-        players.Add(GameObject.Find("Hand"));
-        hands.Add(players[0].GetComponent<HandController>()); //обращаемся к чужому скрипту чтобы менять там парметры
+        players.Add(GameObject.Find(name));
+        players[players.Count - 1].name = "Player" + (amountOfPlayers + 1);
+        hands.Add(players[players.Count - 1].GetComponent<HandController>()); //обращаемся к чужому скрипту чтобы менять там парметры
     }
-	void StartGame() 
+
+	public void StartGame() 
 	{
-        amountOfPlayers = 1;
         win = false;
         timerTurn = -2;
         currentPlayerText = GameObject.Find("CurrentPlayerText").GetComponent<Text>();
-        AddPlayer("host");
+        AddPlayer("Hand");
+        for (int i = 0; i < amountOfPlayers - 1; i++)
+        {
+
+        }
 		GiveTurn (0);
 	}
 	void GiveTurn(int hand)
