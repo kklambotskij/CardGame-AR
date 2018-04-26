@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Networking;
 
 public class HandController : MonoBehaviour
 {
@@ -12,7 +12,6 @@ public class HandController : MonoBehaviour
     Access turnController;
 	public bool isMyTurn = false;
 	public List<Card> Cards = new List<Card>();
-    GameObject desk;
     public bool isNewCards;
 	public string playerName;
     int result;
@@ -25,15 +24,6 @@ public class HandController : MonoBehaviour
         result = -1;
         turnController = GameObject.Find("Access").GetComponent<Access>();
         localDesk = GameObject.Find("Desk").GetComponent<Desk>();
-        if(gameObject.name == "Hand")
-        {
-            playerName = "player1";
-        }
-        else
-        {
-            playerName = "computer";
-        }
-        desk = GameObject.Find("Desk");
         isNewCards = false;
     }
     void ResultController(string owner, Type type)

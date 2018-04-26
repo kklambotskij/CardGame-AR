@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class Access : MonoBehaviour
+public class Access : NetworkBehaviour
 {
-    List<GameObject> players = new List<GameObject>();
-    List<HandController> hands = new List<HandController>();
+    public List<GameObject> players = new List<GameObject>();
+    public List<HandController> hands = new List<HandController>();
+
     int playerNumber = -1;
     Text currentPlayerText;
     int timerTurn;
@@ -18,18 +20,17 @@ public class Access : MonoBehaviour
         return hands[playerNumber];
     }
 #warning AddPlayer to the scene
-    void AddPlayer(string name)
+    public void AddPlayer(string name)
     {
-        players.Add(GameObject.Find("Hand"));
-        hands.Add(players[0].GetComponent<HandController>()); //обращаемся к чужому скрипту чтобы менять там парметры
+        players.Add(GameObject.Find(name));
+        hands.Add(players[players.Count - 1].GetComponent<HandController>()); //обращаемся к чужому скрипту чтобы менять там парметры
     }
-	void StartGame() 
+	public void StartGame() 
 	{
         amountOfPlayers = 1;
         win = false;
         timerTurn = -2;
         currentPlayerText = GameObject.Find("CurrentPlayerText").GetComponent<Text>();
-        AddPlayer("host");
 		GiveTurn (0);
 	}
 	void GiveTurn(int hand)

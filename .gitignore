@@ -128,3 +128,5 @@ Library/assetDatabase3
 *.ide-shm
 *.ide-wal
 >>>>>>> ff20a695c596fd56e5696b263ff292052b0ed31b
+Library/assetDatabase3
+*.dll

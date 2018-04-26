@@ -12,26 +12,29 @@ public class Desk : MonoBehaviour
     //RenderMaster renderMaster = new RenderMaster();
 
     public State gameState = State.Start;
+
+    /* Use turnController.hands or .players instead
     public GameObject player1;
     public GameObject AI;
     HandController hand1;
     HandController AIHand;
+    */
+    Access turnController;
+
     public Deck localDeck;
     public Deck discardPile;
     public int countCards;
     public int fishy = 21;
     TablePattern pokerPattern;
     // Use this for initialization
-
-    void StartGame()
+    private void Start()
+    {
+        turnController = GameObject.Find("Access").GetComponent<Access>();
+    }
+    public void StartGame()
     {
         localDeck = new Deck(Game.UNO, "DrawPile", this.gameObject);
-        //localDeck = new Deck(Game.UNO, "UNO", this.gameObject);
         discardPile = new Deck(Game.None, "DiscardPile", this.gameObject);
-        player1 = GameObject.Find("Hand");
-        AI = GameObject.Find("AI");
-        hand1 = player1.GetComponent<HandController>(); //обращаемся к чужому скрипту чтобы менять там парметры
-        AIHand = AI.GetComponent<HandController>();
         localDeck.Shuffle();
         localDeck.Render();
         //pokerPattern = new TablePattern();
@@ -42,13 +45,13 @@ public class Desk : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && (turnController.hands.Count > 0))
         {
-            GiveCard(hand1, 0, true);
+            GiveCard(turnController.hands[0], 0, true);
         }
-        if (Input.GetMouseButtonDown(2))
+        if (Input.GetMouseButtonDown(2) && (turnController.hands.Count > 1))
         {
-            GiveCard(AIHand, 0, true);
+            GiveCard(turnController.hands[1], 0, true);
         }
     }
 
@@ -63,56 +66,25 @@ public class Desk : MonoBehaviour
     void UNOPrepare()
     {
         //int discardCount = discardPile.Cards.Count;
-        int playerCount = hand1.Cards.Count;
-        int AICount = AIHand.Cards.Count;
-        for (int i = 0; i < playerCount; i++)
+        for (int i = 0; i < turnController.hands.Count; i++)
         {
-            hand1.GiveCard(localDeck, 0, true);
+            int playerCount = turnController.hands[i].Cards.Count;
+            for (int j = 0; j < playerCount; j++)
+            {
+                turnController.hands[i].GiveCard(localDeck, 0, true);
+            }
         }
-        for (int i = 0; i < AICount; i++)
-        {
-            AIHand.GiveCard(localDeck, 0, true);
-        }
-        //DeckReset();
         GiveCard(discardPile, 0, true);
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < turnController.hands.Count; i++)
         {
-            GiveCard(hand1, 0, true);
-            GiveCard(AIHand, 0, true);
+            for (int j = 0; j < countCards; j++)
+            {
+                GiveCard(turnController.hands[i], 0, true);
+            }
         }
     }
+
 #if false
-    /*
-    public void RenderDeck(Deck deck, int shift = 0, bool flip = false)
-    {
-        
-        for (int i = 0; i < deck.Cards.Count; i++)
-        {
-            GameObject handCard;
-            if (!deck.Cards[i].isOnScreen)
-            {
-                GameObject handCard = (GameObject)Instantiate(Resources.Load("FPC/PlayingCards_" + deck.Cards[i].value + deck.Cards[i].GetSuit()));
-                handCard.transform.rotation *= Quaternion.AngleAxis(flip ? -30 : -210, new Vector3(1, 0, 0)); //повернул на -90 по оси X
-                handCard.transform.localScale += new Vector3(60, 60, 0); //увеличил в 60 раз
-                handCard.transform.position = new Vector3(21 - shift, 0 + 0.05f * i, 50);
-                if (handCard.GetComponent<Collider>() == null)
-                {
-                    handCard.AddComponent<BoxCollider>();
-                }
-                if (!flip) handCard.gameObject.transform.SetParent(transform);
-				handCard.name = String.Concat(deck.name, "_", i);
-                deck.Cards[i].gameobj = handCard;
-                deck.Cards[i].isOnScreen = true;
-            }
-            else
-            {
-                deck.Cards[i].gameobj.name = String.Concat(deck.name, "_", i);
-                deck.Cards[i].gameobj.transform.position = new Vector3(21 - shift, 0 + 0.05f * i, 50);
-            }
-        }
-        */
-    }
-#endif
     int RussianBlackJack()
     {
         int counter = 0;
@@ -149,7 +121,7 @@ public class Desk : MonoBehaviour
 
         return 1;
     }
-
+#endif
 	public void Flop()
 	{
 
@@ -164,7 +136,7 @@ public class Desk : MonoBehaviour
 		}
         */
 	}
-
+#if false
     public void CheckforVictory()
     {
         if (localDeck.game == Game.BlackJack)
@@ -183,7 +155,7 @@ public class Desk : MonoBehaviour
             }
         }
     }
-
+#endif
     public int GiveCard(TablePattern patt, int index, bool remove)
 	{
 		if (localDeck.Cards.Count > 0)
