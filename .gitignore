@@ -118,3 +118,13 @@ Library/assetDatabase3
 *.dwlt
 *.mdb
 >>>>>>> e0a2383f8706076bbf94c552feefbba99707e1ed
+<<<<<<< HEAD
+.vs/CardGame-AR/v15/Server/sqlite3/storage.ide-wal
+.vs/CardGame-AR/v15/Server/sqlite3/storage.ide-wal
+*.ide-shm
+=======
+*.ide-wal
+*.ide-shm
+*.ide-shm
+*.ide-wal
+>>>>>>> ff20a695c596fd56e5696b263ff292052b0ed31b

@@ -15,13 +15,11 @@ public class HandController : MonoBehaviour
     GameObject desk;
     public bool isNewCards;
 	public string playerName;
-    int maxCards = 5;
     int result;
     
 	enum Results{
 		Nothing, NextPlayer, Skip, ChangeDir, TakeCards, DrawCard, Victory
 	}
-
     void Start()
     {
         result = -1;

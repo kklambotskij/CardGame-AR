@@ -3,35 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Access : MonoBehaviour 
+public class Access : MonoBehaviour
 {
-	List <GameObject> players = new List<GameObject>();
-	List <HandController> hands = new List<HandController>();
-	int playerNumber = -1;
+    List<GameObject> players = new List<GameObject>();
+    List<HandController> hands = new List<HandController>();
+    int playerNumber = -1;
     Text currentPlayerText;
     int timerTurn;
     public bool win;
     public int amountOfPlayers;
-   public HandController NextPlayer()
+    public HandController NextPlayer()
     {
         playerNumber = (playerNumber + 1) % hands.Count;
         return hands[playerNumber];
     }
-	void Start () 
+#warning AddPlayer to the scene
+    void AddPlayer(string name)
+    {
+        players.Add(GameObject.Find("Hand"));
+        hands.Add(players[0].GetComponent<HandController>()); //обращаемся к чужому скрипту чтобы менять там парметры
+    }
+	void StartGame() 
 	{
-        amountOfPlayers = 2;
+        amountOfPlayers = 1;
         win = false;
         timerTurn = -2;
         currentPlayerText = GameObject.Find("CurrentPlayerText").GetComponent<Text>();
-        for (int i = 0; i < amountOfPlayers; i++)
-        {
-            //players.Add(GameObject.Find("Player" + i));
-            //hands.Add(players[i].GetComponent<HandController>());
-        }
-        players.Add(GameObject.Find("Hand"));
-		players.Add(GameObject.Find ("AI"));
-		hands.Add(players[0].GetComponent<HandController>()); //обращаемся к чужому скрипту чтобы менять там парметры
-		hands.Add(players[1].GetComponent<HandController>());
+        AddPlayer("host");
 		GiveTurn (0);
 	}
 	void GiveTurn(int hand)
