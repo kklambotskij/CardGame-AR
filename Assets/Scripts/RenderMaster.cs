@@ -43,7 +43,7 @@ static public class RenderMaster {
             float z = 0; //31f - 0.1f * i
 			float constX =  - hand.Cards.Count * 6 + 6;
 			float constY = -8; //-12
-            if (String.Compare(hand.playerName, "player1") == 0)
+            if (String.Compare(hand.playerName, "Player2") == 0)
             {
                 constY = -18f;
             }
