@@ -93,6 +93,7 @@ public class HandController : MonoBehaviour
             ResultController(playerName, Type.Hand);
             ResultController(localDesk.localDeck.name, Type.Deck);
         }
+        //Если состояние ChooseColor то вызываем другой ChooseController
     }
     public bool CheckForVictory()
     {
@@ -184,6 +185,18 @@ public class HandController : MonoBehaviour
             Debug.Log(Cards[index].value);
 			switch (Cards[index].value) {
 				case "CC":
+                    //1) Создание пустого объекта ChangeColor в нём создаёшь 4 карты разного цвета с соответствующими названиями red blue yellow green через RenderMaster
+                    //2) Вызов ChooseController от owner "ChangeColor"
+                    //3) результат ChooseController должен вернуть либо ничего либо цвет
+                    GameObject[] pick = new GameObject[4];
+                    for (int i = 0; i < 4; i++)
+                    {
+                        pick[i] = (GameObject)GameObject.Instantiate(Resources.Load("Prefabs/Card"));
+                        pick[i].GetComponent<Renderer>().material.mainTexture = ; // Окрас карты в красный/синий/зелёный
+                    }
+                    CardColor colorPick;
+
+                    Cards[index].color = colorPick; 
 					break;
 				case "2Cards":
 					res = Results.TakeCards;
@@ -195,7 +208,8 @@ public class HandController : MonoBehaviour
 					res = Results.Skip;
 					break;
 				case "4Cards":
-					res = Results.TakeCards;
+#warning Здесь надо дополнительно использовать код из СС.
+                    res = Results.TakeCards;
 					break;
 				default:
 					res = Results.NextPlayer;
@@ -256,32 +270,5 @@ public class HandController : MonoBehaviour
     {
 		//(2.5f - 2.5f * Cards.Count + 5 * i, -5.5f, 31f - 0.1f * i);
 		RenderMaster.Render (this, new Vector3(0, 0, 0));
-/*
-        float x = 2.5f;
-        float y = 2 * x;
-        float z = 2.5f; // 2.5f
-
-        for (int i = 0; i < Cards.Count; ++i)
-        {
-            if (!Cards[i].isOnScreen)
-            {
-                //GameObject handCard = (GameObject)GameObject.Instantiate(Resources.Load("Prefabs/Card"));
-                handCard = (GameObject)GameObject.Instantiate(Resources.Load("FPC/PlayingCards_" + Cards[i].value + Cards[i].GetSuit())); //скачал бесплатные карты
-                handCard.transform.position = new Vector3(z - x * Cards.Count + y * i, -5.5f, 31f - 0.1f * i); //так выглядит лучше, теперь карты можно накладывать, они сдвигаются и не пересекаются.
-                handCard.transform.rotation *= Quaternion.AngleAxis(-90, new Vector3(1, 0, 0)); //повернул на -90 по оси X
-                handCard.transform.localScale += new Vector3(60, 60, 0); //увеличил в 60 раз
-                handCard.gameObject.transform.SetParent(transform);
-				handCard.name = String.Concat(Cards[i].owner, "_", i);
-                Cards[i].gameobj = handCard;
-                Cards[i].isOnScreen = true;
-                //Debug.Log(Cards[i].value + " " + Cards[i].type);
-            }
-            else
-            {
-                Cards[i].gameobj.transform.position = new Vector3(z - x * Cards.Count + y * i, -5.5f, 31f - 0.1f * i);
-            }
-        }
-        isNewCards = false;
-*/
     }
 }
