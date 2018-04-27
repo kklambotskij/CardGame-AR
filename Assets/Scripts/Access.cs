@@ -13,21 +13,24 @@ public class Access : NetworkBehaviour
     Text currentPlayerText;
     int timerTurn;
     public bool win;
-    public int amountOfPlayers;
+    [SyncVar] public int amountOfPlayers;
     public HandController NextPlayer()
     {
         playerNumber = (playerNumber + 1) % hands.Count;
         return hands[playerNumber];
     }
 #warning AddPlayer to the scene
-    public void AddPlayer(string name)
+    public void AddPlayer(string name, GameObject obj)
     {
-        players.Add(GameObject.Find(name));
-        hands.Add(players[players.Count - 1].GetComponent<HandController>()); //обращаемся к чужому скрипту чтобы менять там парметры
+        amountOfPlayers++;
+        players.Add(obj);
+        players[players.Count - 1].name = "Player" + amountOfPlayers;
+        hands.Add(players[players.Count - 1].GetComponent<HandController>());//обращаемся к чужому скрипту чтобы менять там парметры
+        hands[hands.Count - 1].playerName = name;
     }
 	public void StartGame() 
 	{
-        amountOfPlayers = 1;
+        amountOfPlayers = 0;
         win = false;
         timerTurn = -2;
         currentPlayerText = GameObject.Find("CurrentPlayerText").GetComponent<Text>();
