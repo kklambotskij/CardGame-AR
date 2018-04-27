@@ -2,12 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Networking;
 public enum State 
 {
 	Start, Flop, Bet
 };
-public class Desk : MonoBehaviour
+public class Desk : NetworkBehaviour
 {
     //RenderMaster renderMaster = new RenderMaster();
 
@@ -31,7 +31,8 @@ public class Desk : MonoBehaviour
     {
         turnController = GameObject.Find("Access").GetComponent<Access>();
     }
-    public void StartGame()
+
+    [ClientRpc] public void RpcStartGame()
     {
         localDeck = new Deck(Game.UNO, "DrawPile", this.gameObject);
         discardPile = new Deck(Game.None, "DiscardPile", this.gameObject);

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using System;
 
 static public class RenderMaster {
@@ -19,7 +20,7 @@ static public class RenderMaster {
         float constZ = 31f;
         position += new Vector3(constX, constY, constZ);
         Quaternion rotation = Quaternion.AngleAxis(-90, new Vector3(1, 0, 0));
-        Load(pattern.localDeck.Cards, position, rotation, pattern.parrent, x, y, z, Game.UNO);
+        RpcLoad(pattern.localDeck.Cards, position, rotation, pattern.parrent, x, y, z, Game.UNO);
         pattern.isNewCards = false;
         return true;
     }
@@ -29,7 +30,7 @@ static public class RenderMaster {
         float y = 0 + 0.1f; //-5.5f
         float z = 0; //31f - 0.1f * i
 		//position += new Vector3(0, 0,-5); 
-        Load(localdeck.Cards, position, rotation, localdeck.desk, x, y, z, Game.UNO);
+        RpcLoad(localdeck.Cards, position, rotation, localdeck.desk, x, y, z, Game.UNO);
         return true;
     }
     static public bool Render(HandController hand, Vector3 position)
@@ -50,20 +51,21 @@ static public class RenderMaster {
             float constZ = 55;
             position += new Vector3(constX, constY, constZ);
             Quaternion rotation = Quaternion.AngleAxis(180, new Vector3(0, 0, 1));
-            Load(hand.Cards, position, rotation, hand.gameObject, x, y, z, Game.UNO);
+            RpcLoad(hand.Cards, position, rotation, hand.gameObject, x, y, z, Game.UNO);
             hand.cardLine = hand.Cards [hand.Cards.Count - 1].gameobj.transform.position;
 		}
 		hand.isNewCards = false;
         return true;
     }
-	static bool Load(List<Card> Cards, Vector3 position, Quaternion rotation, GameObject parrent, float changeX, float changeY, float changeZ)
+	[ClientRpc] static bool RpcLoad(List<Card> Cards, Vector3 position, Quaternion rotation, GameObject parrent, float changeX, float changeY, float changeZ)
     {
         for (int i = 0; i < Cards.Count; ++i)
         {
             if (!Cards[i].isOnScreen)
             {
                 GameObject gmObj = (GameObject)GameObject.Instantiate(Resources.Load("FPC/PlayingCards_" + Cards[i].value + Cards[i].GetSuit()));
-				gmObj.transform.localScale = new Vector3(10, 10, 0.05f);
+                NetworkServer.SpawnWithClientAuthority(gmObj, parrent);
+                gmObj.transform.localScale = new Vector3(10, 10, 0.05f);
 				if (parrent != null) 
 				{
 					gmObj.gameObject.transform.SetParent(parrent.transform);
@@ -83,11 +85,13 @@ static public class RenderMaster {
 				Cards[i].gameobj.transform.position = position + new Vector3(changeX * i, changeY * i, changeZ * i);
                 Cards[i].gameobj.name = String.Concat(Cards[i].owner, "_", i);
             }
+
         }
         return true;
     }
 
-    static bool Load(List<Card> Cards, Vector3 position, Quaternion rotation, GameObject parrent, float changeX, float changeY, float changeZ, Game game)
+    [ClientRpc]
+    static bool RpcLoad(List<Card> Cards, Vector3 position, Quaternion rotation, GameObject parrent, float changeX, float changeY, float changeZ, Game game)
     {
         if (game == Game.UNO)
         {
@@ -96,7 +100,8 @@ static public class RenderMaster {
                 if (!Cards[i].isOnScreen)
                 {
                     GameObject gmObj = (GameObject)GameObject.Instantiate(Resources.Load("Prefabs/Card"));
-					Debug.Log ((Cards [i].GetValue () + 13 * Cards [i].GetColor ()).ToString ());
+                    NetworkServer.Spawn(gmObj);
+                    Debug.Log ((Cards [i].GetValue () + 13 * Cards [i].GetColor ()).ToString ());
 					gmObj.GetComponent<Renderer>().material.mainTexture = (Texture)GameObject.Instantiate(Resources.Load
 						("UNOcards/sliced_sprites/unos_" + (Cards[i].GetValue() + 13*Cards[i].GetColor()).ToString()));
 
@@ -120,11 +125,12 @@ static public class RenderMaster {
                     Cards[i].gameobj.transform.position = position + new Vector3(changeX * i, changeY * i, changeZ * i);
                     Cards[i].gameobj.name = String.Concat(Cards[i].owner, "_", i);
                 }
+                
             }
         }
         else
         {
-            Load(Cards, position, rotation, parrent, changeX, changeY, changeZ); //Если игра != UNO, тогда подгружаем стандартные игральные карты
+            RpcLoad(Cards, position, rotation, parrent, changeX, changeY, changeZ); //Если игра != UNO, тогда подгружаем стандартные игральные карты
         }
 
         return true;

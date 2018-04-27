@@ -19,7 +19,7 @@ public class SetupLocalPlayer : NetworkBehaviour {
     void Initialize()
     {
         GetComponent<HandController>().playerName = playerName;
-        controller.AddPlayer(playerName, this.gameObject);
+        controller.AddPlayer(gameObject);
         if (isServer)
         {
             //controller.StartGame();

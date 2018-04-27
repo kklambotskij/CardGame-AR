@@ -6,6 +6,17 @@ using UnityEngine.Networking;
 
 public class Access : NetworkBehaviour
 {
+    private static Access _instance;
+    public static Access instance
+    {
+        get
+        {
+            if (_instance == null)
+                _instance = Access.FindObjectOfType<Access>();
+            return _instance;
+        }
+    }
+
     public List<GameObject> players = new List<GameObject>();
     public List<HandController> hands = new List<HandController>();
 
@@ -13,22 +24,23 @@ public class Access : NetworkBehaviour
     Text currentPlayerText;
     int timerTurn;
     public bool win;
-    [SyncVar] public int amountOfPlayers;
+    public int amountOfPlayers;
     public HandController NextPlayer()
     {
         playerNumber = (playerNumber + 1) % hands.Count;
         return hands[playerNumber];
     }
 #warning AddPlayer to the scene
-    public void AddPlayer(string name, GameObject obj)
+    public void AddPlayer(GameObject obj)
     {
         amountOfPlayers++;
         players.Add(obj);
-        players[players.Count - 1].name = "Player" + amountOfPlayers;
+        string name = "Player" + amountOfPlayers;
+        players[players.Count - 1].name = name;
         hands.Add(players[players.Count - 1].GetComponent<HandController>());//обращаемся к чужому скрипту чтобы менять там парметры
         hands[hands.Count - 1].playerName = name;
     }
-	public void StartGame() 
+    [ClientRpc] public void RpcStartGame() 
 	{
         amountOfPlayers = 0;
         win = false;
