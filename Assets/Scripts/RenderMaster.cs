@@ -56,6 +56,17 @@ static public class RenderMaster {
 		hand.isNewCards = false;
         return true;
     }
+
+    static public bool Render4ColorCards(HandController hand, Vector3 position, bool isCCPlayed)
+    {
+        if (isCCPlayed)
+        {
+            float x = 0, y = 0, z = 0;
+
+        }
+        return true;
+    }
+
 	static bool Load(List<Card> Cards, Vector3 position, Quaternion rotation, GameObject parrent, float changeX, float changeY, float changeZ)
     {
         for (int i = 0; i < Cards.Count; ++i)
