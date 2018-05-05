@@ -13,18 +13,20 @@ public class HandController : MonoBehaviour
 	public bool isMyTurn = false;
 	public List<Card> Cards = new List<Card>();
     GameObject desk;
+    GameObject changeColor;
     public bool isNewCards;
 	public string playerName;
     int result;
     
 	enum Results{
-		Nothing, NextPlayer, Skip, ChangeDir, TakeCards, DrawCard, Victory
+		Nothing, NextPlayer, Skip, ChangeDir, TakeCards, DrawCard, Victory, Red, Yellow, Green, Blue
 	}
     void Start()
     {
         result = -1;
         turnController = GameObject.Find("Access").GetComponent<Access>();
         localDesk = GameObject.Find("Desk").GetComponent<Desk>();
+        changeColor = GameObject.Find("ChangeColor");
         if(gameObject.name == "Hand")
         {
             playerName = "player1";
@@ -118,6 +120,25 @@ public class HandController : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
+                if (owner == changeColor.name)
+                {
+                    switch (hit.collider.gameObject.name)
+                    {
+                        case "Red":
+                            result = Results.Red;
+                            break;
+                        case "Yellow":
+                            result = Results.Yellow;
+                            break;
+                        case "Green":
+                            result = Results.Green;
+                            break;
+                        case "Blue":
+                            result = Results.Blue;
+                            break;
+                    }
+                    return result;
+                }
                 int res = String.Compare(hit.collider.gameObject.name, 0, owner, 0, owner.Length);
                 if (res == 0)
                 {
@@ -188,15 +209,10 @@ public class HandController : MonoBehaviour
                     //1) Создание пустого объекта ChangeColor в нём создаёшь 4 карты разного цвета с соответствующими названиями red blue yellow green через RenderMaster
                     //2) Вызов ChooseController от owner "ChangeColor"
                     //3) результат ChooseController должен вернуть либо ничего либо цвет
-                    GameObject[] pick = new GameObject[4];
-                    for (int i = 0; i < 4; i++)
-                    {
-                        pick[i] = (GameObject)GameObject.Instantiate(Resources.Load("Prefabs/Card"));
-                        pick[i].GetComponent<Renderer>().material.mainTexture = ; // Окрас карты в красный/синий/зелёный
-                    }
                     CardColor colorPick;
+                    RenderMaster.RenderChangeColor(new Vector3(0, 0, 0), true);
+                    ChooseController(changeColor.name, Type.Hand);
 
-                    Cards[index].color = colorPick; 
 					break;
 				case "2Cards":
 					res = Results.TakeCards;

@@ -1,7 +1,6 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 static public class RenderMaster {
 
@@ -57,12 +56,41 @@ static public class RenderMaster {
         return true;
     }
 
-    static public bool Render4ColorCards(HandController hand, Vector3 position, bool isCCPlayed)
+    static public bool RenderChangeColor(Vector3 position, bool isCCPlayed)
     {
         if (isCCPlayed)
         {
             float x = 0, y = 0, z = 0;
-
+            Quaternion rotation = Quaternion.AngleAxis(180, new Vector3(0, 0, 1));
+            for (int i = 0; i < 4; i++)
+            {
+                GameObject gmObj = (GameObject)GameObject.Instantiate(Resources.Load("Prefabs/Card"));
+                gmObj.GetComponent<Renderer>().material.mainTexture = (Texture)GameObject.Instantiate(Resources.Load("UNOcards/images/unos_empty_" + i));
+                gmObj.transform.position = position + new Vector3(6 * i, 0, 0);
+                gmObj.transform.rotation *= rotation;
+                gmObj.gameObject.transform.SetParent(GameObject.Find("ChangeColor").transform);
+                if (gmObj.GetComponent<Collider>() == null)
+                {
+                    gmObj.AddComponent<BoxCollider>();
+                }
+                string name = "NoName";
+                switch (i)
+                {
+                    case 0:
+                        name = "Red";
+                        break;
+                    case 1:
+                        name = "Yellow";
+                        break;
+                    case 2:
+                        name = "Green";
+                        break;
+                    case 3:
+                        name = "Blue";
+                        break;
+                }
+                gmObj.name = name;
+            }
         }
         return true;
     }
@@ -107,9 +135,9 @@ static public class RenderMaster {
                 if (!Cards[i].isOnScreen)
                 {
                     GameObject gmObj = (GameObject)GameObject.Instantiate(Resources.Load("Prefabs/Card"));
-					Debug.Log ((Cards [i].GetValue () + 13 * Cards [i].GetColor ()).ToString ());
+					Debug.Log ((Cards [i].GetValue () + 14 * Cards [i].GetColor ()).ToString ());
 					gmObj.GetComponent<Renderer>().material.mainTexture = (Texture)GameObject.Instantiate(Resources.Load
-						("UNOcards/sliced_sprites/unos_" + (Cards[i].GetValue() + 13*Cards[i].GetColor()).ToString()));
+						("UNOcards/images/unos_" + (Cards[i].GetValue() + 14*Cards[i].GetColor()).ToString()));
 
                     gmObj.transform.localScale = new Vector3(6, 10, 0.05f);
                     if (parrent != null)

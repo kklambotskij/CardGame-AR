@@ -234,7 +234,7 @@ public class Deck
 				Cards.Add(new Card("Skip", Card.GetColor(i), name));
 				Cards.Add(new Card("CC", Card.GetColor(4), name));
 				Cards.Add(new Card("4Cards", Card.GetColor(4), name));//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				for (int j = 1; j < 10; j++)
+				for (int j = 0; j < 10; j++)
                 {
 					Cards.Add(new Card(j.ToString(), Card.GetColor(i), name));
                 }
