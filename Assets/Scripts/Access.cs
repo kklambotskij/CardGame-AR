@@ -24,12 +24,19 @@ public class Access : NetworkBehaviour
     Text currentPlayerText;
     int timerTurn;
     public bool win;
-    public int amountOfPlayers;
+    public int amountOfPlayers = 0;
+
+    public List<HandController> GetListOfHands()
+    {
+        return hands;
+    }
+
     public HandController NextPlayer()
     {
         playerNumber = (playerNumber + 1) % hands.Count;
         return hands[playerNumber];
     }
+
 #warning AddPlayer to the scene
     public void AddPlayer(GameObject obj)
     {
