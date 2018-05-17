@@ -76,7 +76,7 @@ public class Card {
         int result;
 		switch (value)
 		{
-            case "CC": result = 2; break;
+            case "CC": result = 14; break;
             case "2Cards": result = 12; break;
             case "CD": result = 11;  break;
             case "Skip": result = 10;  break;

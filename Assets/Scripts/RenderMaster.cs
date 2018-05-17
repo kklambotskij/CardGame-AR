@@ -141,9 +141,9 @@ static public class RenderMaster {
                 {
                     GameObject gmObj = (GameObject)GameObject.Instantiate(Resources.Load("Prefabs/Card"));
                     NetworkServer.Spawn(gmObj);
-                    Debug.Log ((Cards [i].GetValue () + 13 * Cards [i].GetColor ()).ToString ());
+                    Debug.Log ((Cards [i].GetValue () + 14 * Cards [i].GetColor ()).ToString ());
 					gmObj.GetComponent<Renderer>().material.mainTexture = (Texture)GameObject.Instantiate(Resources.Load
-						("UNOcards/images/unos_" + (Cards[i].GetValue() + 14*Cards[i].GetColor()).ToString()));
+						("UNOcards/images/unos_" + (Cards[i].GetValue() + 1 + 14*Cards[i].GetColor()).ToString()));
 
                     gmObj.transform.localScale = new Vector3(6, 10, 0.05f);
                     if (parrent != null)
