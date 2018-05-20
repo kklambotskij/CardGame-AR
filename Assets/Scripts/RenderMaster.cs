@@ -144,7 +144,6 @@ static public class RenderMaster {
                     Debug.Log ((Cards [i].GetValue () + 14 * Cards [i].GetColor ()).ToString ());
 					gmObj.GetComponent<Renderer>().material.mainTexture = (Texture)GameObject.Instantiate(Resources.Load
 						("UNOcards/images/unos_" + (Cards[i].GetValue() + 1 + 14*Cards[i].GetColor()).ToString()));
-
                     gmObj.transform.localScale = new Vector3(6, 10, 0.05f);
                     if (parrent != null)
                     {

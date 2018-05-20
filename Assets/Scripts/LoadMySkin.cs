@@ -42,7 +42,7 @@ public class LoadMySkin : NetworkBehaviour {
             if (index >= 0 && index < hand.Cards.Count)
             {
                 GetComponent<Renderer>().material.mainTexture = (Texture)GameObject.Instantiate(Resources.Load
-                ("UNOcards/sliced_sprites/unos_" + (hand.Cards[index].GetValue() + 13 * hand.Cards[index].GetColor()).ToString()));
+                ("UNOcards/sliced_sprites/unos_" + (hand.Cards[index].GetValue() + 1 + 14 * hand.Cards[index].GetColor()).ToString()));
             }
         }
     }

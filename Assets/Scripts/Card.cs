@@ -77,10 +77,10 @@ public class Card {
 		switch (value)
 		{
             case "CC": result = 14; break;
-            case "2Cards": result = 12; break;
-            case "CD": result = 11;  break;
-            case "Skip": result = 10;  break;
-            case "4Cards": result = 1; break;
+            case "2Cards": result = 13; break;
+            case "CD": result = 12;  break;
+            case "Skip": result = 11;  break;
+            case "4Cards": result = 14; break;
 			default: result = System.Convert.ToInt32(value); break;
         }
         return result;
@@ -233,7 +233,7 @@ public class Deck
 				Cards.Add(new Card("CD", Card.GetColor(i), name));
 				Cards.Add(new Card("Skip", Card.GetColor(i), name));
 				Cards.Add(new Card("CC", Card.GetColor(4), name));
-				Cards.Add(new Card("4Cards", Card.GetColor(4), name));//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				//Cards.Add(new Card("4Cards", Card.GetColor(4), name));//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				for (int j = 0; j < 10; j++)
                 {
 					Cards.Add(new Card(j.ToString(), Card.GetColor(i), name));

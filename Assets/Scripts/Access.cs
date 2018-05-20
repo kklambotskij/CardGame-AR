@@ -57,6 +57,10 @@ public class Access : NetworkBehaviour
 	}
 	void GiveTurn(int hand)
 	{
+        if (hands.Count <= 0)
+        {
+            return;
+        }
         if (hand >= hands.Count) 
 		{
 			hand = 0;
