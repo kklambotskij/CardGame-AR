@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Networking;
 
-public class Access : NetworkBehaviour
+public class Access : MonoBehaviour
 {
     private static Access _instance;
     public static Access instance
@@ -19,6 +18,9 @@ public class Access : NetworkBehaviour
 
     public List<GameObject> players = new List<GameObject>();
     public List<HandController> hands = new List<HandController>();
+    public GameObject playerReady;
+    public GameObject changeColor;
+
 
     int playerNumber = -1;
     Text currentPlayerText;
@@ -37,7 +39,6 @@ public class Access : NetworkBehaviour
         return hands[playerNumber];
     }
 
-#warning AddPlayer to the scene
     public void AddPlayer(GameObject obj)
     {
         amountOfPlayers++;
@@ -47,14 +48,19 @@ public class Access : NetworkBehaviour
         hands.Add(players[players.Count - 1].GetComponent<HandController>());//обращаемся к чужому скрипту чтобы менять там парметры
         hands[hands.Count - 1].playerName = name;
     }
-    [ClientRpc] public void RpcStartGame() 
+    public void StartGame() 
 	{
+        changeColor = GameObject.Find("ChangeColor");
+        changeColor.SetActive(false);
         amountOfPlayers = 0;
         win = false;
         timerTurn = -2;
         currentPlayerText = GameObject.Find("CurrentPlayerText").GetComponent<Text>();
-		GiveTurn (0);
+        AddPlayer(GameObject.Find("Player1"));
+        AddPlayer(GameObject.Find("Player2"));
+        GiveTurn (0);
 	}
+
 	void GiveTurn(int hand)
 	{
         if (hand >= hands.Count) 
@@ -64,9 +70,11 @@ public class Access : NetworkBehaviour
 		foreach (var item in hands) 
 		{
 			item.isMyTurn = false;
+            item.gameObject.SetActive(false);
 		}
 		if (hand >= 0) {
-			hands [hand].isMyTurn = true;
+            hands[hand].gameObject.SetActive(true);
+            playerReady.GetComponent<CPtoogle>().Activate(hands[hand]);
 		}
 		//Debug.Log (hand);
 		playerNumber = hand;

@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UnityEngine.Networking;
 
 public class HandController : MonoBehaviour
 {
@@ -14,7 +12,6 @@ public class HandController : MonoBehaviour
 	public bool isMyTurn = false;
 	public List<Card> Cards = new List<Card>();
     GameObject desk;
-    GameObject changeColor;
     public bool isNewCards;
 	public string playerName;
     int result;
@@ -27,16 +24,8 @@ public class HandController : MonoBehaviour
         result = -1;
         turnController = GameObject.Find("Access").GetComponent<Access>();
         localDesk = GameObject.Find("Desk").GetComponent<Desk>();
-        changeColor = GameObject.Find("ChangeColor");
-        if(gameObject.name == "Hand")
-        {
-            playerName = "player1";
-        }
-        else
-        {
-            playerName = "computer";
-        }
         desk = GameObject.Find("Desk");
+        playerName = name;
         isNewCards = false;
     }
     void ResultController(string owner, Type type)
@@ -121,7 +110,7 @@ public class HandController : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                if (owner == changeColor.name)
+                if (owner == Access.instance.changeColor.name)
                 {
                     switch (hit.collider.gameObject.name)
                     {
@@ -201,7 +190,8 @@ public class HandController : MonoBehaviour
 		Results res = Results.Nothing;
         if (Cards[index].value == localDesk.discardPile.Cards[localDesk.discardPile.Cards.Count - 1].value ||
             Cards[index].color == localDesk.discardPile.Cards[localDesk.discardPile.Cards.Count - 1].color || 
-			Cards[index].color == CardColor.Any)
+			Cards[index].color == CardColor.Any ||
+            localDesk.discardPile.Cards[localDesk.discardPile.Cards.Count - 1].color == CardColor.Any)
         {
 #if true
             Debug.Log(Cards[index].value);
@@ -210,11 +200,9 @@ public class HandController : MonoBehaviour
                     //1) Создание пустого объекта ChangeColor в нём создаёшь 4 карты разного цвета с соответствующими названиями red blue yellow green через RenderMaster
                     //2) Вызов ChooseController от owner "ChangeColor"
                     //3) результат ChooseController должен вернуть либо ничего либо цвет
-                    CardColor colorPick;
-                    RenderMaster.RenderChangeColor(new Vector3(0, 0, 0), true);
-                    ChooseController(changeColor.name, Type.Hand);
-
-					break;
+                    //Access.instance.changeColor.SetActive(true);
+                    res = Results.NextPlayer;
+                    break;
 				case "2Cards":
 					res = Results.TakeCards;
 					break;
@@ -225,7 +213,6 @@ public class HandController : MonoBehaviour
 					res = Results.Skip;
 					break;
 				case "4Cards":
-#warning Здесь надо дополнительно использовать код из СС.
                     res = Results.TakeCards;
 					break;
 				default:

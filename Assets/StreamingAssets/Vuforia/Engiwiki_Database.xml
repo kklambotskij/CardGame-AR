@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
+  <Tracking>
+    <ImageTarget name="engewika_logoE" size="10.000000 10.493179" />
+    <ImageTarget name="Marker3" size="1.000000 0.999751" />
+    <ImageTarget name="Marker2" size="1.000000 1.000000" />
+    <ImageTarget name="Marker1" size="1.000000 0.999544" />
+    <ImageTarget name="Marker" size="1.000000 1.000000" />
+    <ImageTarget name="Ace" size="10.000000 13.333333" />
+    <ImageTarget name="copag-spring-ace-big" size="1.000000 1.390000" />
+    <ImageTarget name="Red_Card" size="1.000000 1.666667" />
+  </Tracking>
+</QCARConfig>

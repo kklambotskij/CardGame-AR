@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 using System;
 
 static public class RenderMaster {
@@ -20,7 +18,7 @@ static public class RenderMaster {
         float constZ = 31f;
         position += new Vector3(constX, constY, constZ);
         Quaternion rotation = Quaternion.AngleAxis(-90, new Vector3(1, 0, 0));
-        RpcLoad(pattern.localDeck.Cards, position, rotation, pattern.parrent, x, y, z, Game.UNO);
+        Load(pattern.localDeck.Cards, position, rotation, pattern.parrent, x, y, z, Game.UNO);
         pattern.isNewCards = false;
         return true;
     }
@@ -30,7 +28,7 @@ static public class RenderMaster {
         float y = 0 + 0.1f; //-5.5f
         float z = 0; //31f - 0.1f * i
 		//position += new Vector3(0, 0,-5); 
-        RpcLoad(localdeck.Cards, position, rotation, localdeck.desk, x, y, z, Game.UNO);
+        Load(localdeck.Cards, position, rotation, localdeck.desk, x, y, z, Game.UNO);
         return true;
     }
     static public bool Render(HandController hand, Vector3 position)
@@ -39,19 +37,20 @@ static public class RenderMaster {
 		if(hand.Cards.Count >=	 1)
 		{
             //вводим настройки для данного типа рендера.
-			float x = 6; //z - x * Cards.Count + y * i
+			float x = 4; //z - x * Cards.Count + y * i
             float y = 0; //-5.5f
             float z = 0; //31f - 0.1f * i
-			float constX =  - hand.Cards.Count * 6 + 6;
-			float constY = -8; //-12
+			float constX =  -5;
+			float constY = -4; //-12
             if (String.Compare(hand.playerName, "Player2") == 0)
             {
-                constY = -18f;
+                //constY = -18f;
             }
-            float constZ = 55;
+            float constZ = -5;
             position += new Vector3(constX, constY, constZ);
             Quaternion rotation = Quaternion.AngleAxis(180, new Vector3(0, 0, 1));
-            RpcLoad(hand.Cards, position, rotation, hand.gameObject, x, y, z, Game.UNO);
+            rotation *= Quaternion.AngleAxis(-40, new Vector3(1, 0, 0));
+            Load(hand.Cards, position, rotation, hand.gameObject, x, y, z, Game.UNO);
             hand.cardLine = hand.Cards [hand.Cards.Count - 1].gameobj.transform.position;
 		}
 		hand.isNewCards = false;
@@ -62,7 +61,6 @@ static public class RenderMaster {
     {
         if (isCCPlayed)
         {
-            float x = 0, y = 0, z = 0;
             Quaternion rotation = Quaternion.AngleAxis(180, new Vector3(0, 0, 1));
             for (int i = 0; i < 4; i++)
             {
@@ -97,14 +95,13 @@ static public class RenderMaster {
         return true;
     }
 
-	[ClientRpc] static bool RpcLoad(List<Card> Cards, Vector3 position, Quaternion rotation, GameObject parrent, float changeX, float changeY, float changeZ)
+    static bool Load(List<Card> Cards, Vector3 position, Quaternion rotation, GameObject parrent, float changeX, float changeY, float changeZ)
     {
         for (int i = 0; i < Cards.Count; ++i)
         {
             if (!Cards[i].isOnScreen)
             {
                 GameObject gmObj = (GameObject)GameObject.Instantiate(Resources.Load("FPC/PlayingCards_" + Cards[i].value + Cards[i].GetSuit()));
-                NetworkServer.SpawnWithClientAuthority(gmObj, parrent);
                 gmObj.transform.localScale = new Vector3(10, 10, 0.05f);
 				if (parrent != null) 
 				{
@@ -130,8 +127,7 @@ static public class RenderMaster {
         return true;
     }
 
-    [ClientRpc]
-    static bool RpcLoad(List<Card> Cards, Vector3 position, Quaternion rotation, GameObject parrent, float changeX, float changeY, float changeZ, Game game)
+    static bool Load(List<Card> Cards, Vector3 position, Quaternion rotation, GameObject parrent, float changeX, float changeY, float changeZ, Game game)
     {
         if (game == Game.UNO)
         {
@@ -140,12 +136,11 @@ static public class RenderMaster {
                 if (!Cards[i].isOnScreen)
                 {
                     GameObject gmObj = (GameObject)GameObject.Instantiate(Resources.Load("Prefabs/Card"));
-                    NetworkServer.Spawn(gmObj);
                     Debug.Log ((Cards [i].GetValue () + 14 * Cards [i].GetColor ()).ToString ());
 					gmObj.GetComponent<Renderer>().material.mainTexture = (Texture)GameObject.Instantiate(Resources.Load
 						("UNOcards/images/unos_" + (Cards[i].GetValue() + 1 + 14*Cards[i].GetColor()).ToString()));
 
-                    gmObj.transform.localScale = new Vector3(6, 10, 0.05f);
+                    gmObj.transform.localScale = new Vector3(4, 6, 0.05f);
                     if (parrent != null)
                     {
                         gmObj.gameObject.transform.SetParent(parrent.transform);
@@ -170,7 +165,7 @@ static public class RenderMaster {
         }
         else
         {
-            RpcLoad(Cards, position, rotation, parrent, changeX, changeY, changeZ); //Если игра != UNO, тогда подгружаем стандартные игральные карты
+            Load(Cards, position, rotation, parrent, changeX, changeY, changeZ); //Если игра != UNO, тогда подгружаем стандартные игральные карты
         }
 
         return true;

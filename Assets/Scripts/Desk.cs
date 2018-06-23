@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Networking;
+﻿using UnityEngine;
 public enum State 
 {
 	Start, Flop, Bet
 };
-public class Desk : NetworkBehaviour
+public class Desk : MonoBehaviour
 {
     //RenderMaster renderMaster = new RenderMaster();
 
@@ -27,20 +23,18 @@ public class Desk : NetworkBehaviour
     public int fishy = 21;
     TablePattern pokerPattern;
     // Use this for initialization
-    private void Start()
+
+    public void Start()
     {
         turnController = GameObject.Find("Access").GetComponent<Access>();
-    }
-
-    [ClientRpc] public void RpcStartGame()
-    {
-        localDeck = new Deck(Game.UNO, "DrawPile", this.gameObject);
-        discardPile = new Deck(Game.None, "DiscardPile", this.gameObject);
+        localDeck = new Deck(Game.UNO, "DrawPile", gameObject);
+        discardPile = new Deck(Game.None, "DiscardPile", gameObject);
         localDeck.Shuffle();
         localDeck.Render();
         //pokerPattern = new TablePattern();
         //pokerPattern.AddCard(new Card("2", Suit.Clubs));
         //pokerPattern.Render();
+        turnController.StartGame();
         UNOPrepare();
     }
 

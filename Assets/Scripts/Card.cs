@@ -52,7 +52,7 @@ public class Card {
             case CardColor.Blue:
                 return 3;
             default:
-                return 4;
+                return 0;
         }
     }
 	static public CardColor GetColor(int c)
@@ -68,7 +68,7 @@ public class Card {
 			case 3:
 				return CardColor.Blue;
 			default:
-				return CardColor.Any;
+                return CardColor.Any;
 		}
 	}
     public int GetValue()
@@ -76,11 +76,11 @@ public class Card {
         int result;
 		switch (value)
 		{
-            case "CC": result = 14; break;
+            case "CC": result = 13; break;
             case "2Cards": result = 12; break;
             case "CD": result = 11;  break;
             case "Skip": result = 10;  break;
-            case "4Cards": result = 1; break;
+            case "4Cards": result = 111; break;
 			default: result = System.Convert.ToInt32(value); break;
         }
         return result;
@@ -265,7 +265,7 @@ public class Deck
     {
         Quaternion quat = Quaternion.AngleAxis(flip ? 50 : 230, new Vector3(1, 0, 0));
 		quat *= Quaternion.AngleAxis(180, new Vector3(0, 0, 1));
-        RenderMaster.Render(this, new Vector3(21 - shift*1.3f , 0, 50), quat);
+        RenderMaster.Render(this, new Vector3(0 - shift*1.3f , 0, 0), quat);
     }
 }
 
